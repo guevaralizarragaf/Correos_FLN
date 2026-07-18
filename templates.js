@@ -1,0 +1,319 @@
+// ============================================================
+// PLANTILLAS DE CORREO — FORTALECERNOS
+// Cada plantilla es un string HTML con tokens {{campo}}.
+// Los tokens de género se escriben así: {{g:masculino|femenino}}
+// y se resuelven según el campo "genero" (H/M) de cada persona.
+// ============================================================
+
+const HEADER = `
+<tr>
+  <td style="background-color:#1428D6; padding:28px 32px; text-align:center;">
+    <img src="{{logo_url}}" alt="Fortalecernos" width="200" style="display:block; margin:0 auto;">
+  </td>
+</tr>`;
+
+const FOOTER = `
+<tr>
+  <td style="background-color:#1428D6; padding:16px 32px; text-align:center;">
+    <p style="color:#c9cdf5; font-size:12px; margin:0;">Fortalecernos S.A.C. — Distribuidor autorizado Entel</p>
+  </td>
+</tr>`;
+
+function wrap(title, bodyRows) {
+  return `<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><title>${title}</title></head>
+<body style="margin:0; padding:0; background-color:#eef0f7; font-family: Arial, Helvetica, sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#eef0f7; padding:24px 0;">
+  <tr>
+    <td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+        ${HEADER}
+        ${bodyRows}
+        ${FOOTER}
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>`;
+}
+
+const TEMPLATES = [
+
+  // ------------------------------------------------------------
+  // 1. BIENVENIDA — DÍA 1
+  // ------------------------------------------------------------
+  {
+    id: "bienvenida",
+    name: "Bienvenida · Día 1",
+    description: "Se envía apenas firma contrato, con los datos de su primer día.",
+    subject: (d) => `¡{{g:Bienvenido|Bienvenida}} a Fortalecernos, ${d.nombre}!`,
+    fields: [
+      { key: "fecha", label: "Fecha de presentación", type: "date" },
+      { key: "hora", label: "Hora", type: "time" },
+      { key: "direccion_tienda", label: "Tienda / Punto de venta", type: "text", placeholder: "Ej. Tienda Ica Centro" },
+      { key: "nombre_supervisor", label: "Nombre del supervisor", type: "text" },
+    ],
+    html: wrap("Bienvenido a Fortalecernos", `
+        <tr>
+          <td style="padding:32px 32px 8px 32px;">
+            <h1 style="margin:0; color:#1428D6; font-size:22px;">¡{{g:Bienvenido|Bienvenida}} a Fortalecernos, {{nombre}}! 🎉</h1>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px 32px 0 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
+            <p>Estamos muy contentos de que te unas a nuestro equipo como <strong>{{g:Asesor de Ventas|Asesora de Ventas}}</strong> en Fortalecernos, distribuidor autorizado de Entel.</p>
+            <p>Este correo tiene toda la información que necesitas para tu primer día. Léelo con calma antes de presentarte en tienda.</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 32px 0 32px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f5fb; border-left:4px solid #1428D6; border-radius:4px;">
+              <tr>
+                <td style="padding:18px 20px; color:#1a1a1a; font-size:14px; line-height:1.8;">
+                  <strong>📅 Fecha de presentación:</strong> {{fecha}}<br>
+                  <strong>🕒 Hora:</strong> {{hora}}<br>
+                  <strong>📍 Tienda / Punto de venta:</strong> {{direccion_tienda}}<br>
+                  <strong>👤 Pregunta por:</strong> {{nombre_supervisor}} (Supervisor de zona)
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:24px 32px 0 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
+            <p style="margin:0 0 6px 0;"><strong>Qué debes traer:</strong></p>
+            <ul style="margin:0; padding-left:20px;">
+              <li>DNI (original y copia)</li>
+              <li>1 foto tamaño carnet</li>
+              <li>N° de cuenta bancaria para planilla</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:24px 32px 0 32px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#fff8e6; border-left:4px solid #c9a227; border-radius:4px;">
+              <tr>
+                <td style="padding:18px 20px; color:#5a4a10; font-size:14px; line-height:1.7;">
+                  <strong>📧 Antes de tu primer día, crea tu correo de trabajo</strong><br>
+                  Mientras seguimos creciendo, cada colaborador crea su propio correo en Gmail con esta estructura:
+                  <br><br>
+                  <code style="background-color:#ffffff; padding:6px 10px; border-radius:4px; display:inline-block; font-size:14px; color:#1428D6; border:1px solid #e0d6a8;">FLN.[inicialnombre][apellido]@gmail.com</code>
+                  <br><br>
+                  Ejemplo: Francisco López → <strong>FLN.flopez@gmail.com</strong><br>
+                  Respóndenos con la dirección que creaste para agregarte a los grupos de trabajo.
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:32px 32px 8px 32px; text-align:center;">
+            <p style="color:#3a3a3a; font-size:15px; margin:0 0 16px 0;">Toda la guía de bienvenida, políticas de tienda y proceso de ventas la encuentras aquí:</p>
+            <a href="{{link_notion}}" target="_blank" style="background-color:#1428D6; color:#ffffff; text-decoration:none; font-weight:bold; padding:14px 32px; border-radius:6px; display:inline-block; font-size:15px;">
+              Ver mi guía de bienvenida →
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:28px 32px 8px 32px; color:#3a3a3a; font-size:14px; line-height:1.6;">
+            <p>¿Alguna duda antes de tu primer día? Escríbenos:</p>
+            <p style="margin:0;"><strong>{{nombre_rrhh}}</strong> — Recursos Humanos<br>
+            📱 WhatsApp: {{numero_whatsapp}}<br>
+            ✉️ {{correo_rrhh}}</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:24px 32px 32px 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
+            <p>¡Nos vemos pronto! {{g:Bienvenido|Bienvenida}} a la familia Fortalecernos. 💙</p>
+            <p style="margin:0;"><strong>Equipo Fortalecernos</strong></p>
+          </td>
+        </tr>`)
+  },
+
+  // ------------------------------------------------------------
+  // 2. CHECK-IN — 7 DÍAS
+  // ------------------------------------------------------------
+  {
+    id: "checkin7",
+    name: "Check-in · 7 días",
+    description: "Feedback de la primera semana, con link a un formulario.",
+    subject: (d) => `${d.nombre}, ¿cómo va tu primera semana?`,
+    fields: [
+      { key: "link_formulario", label: "Link del formulario (Google Forms)", type: "url" },
+    ],
+    html: wrap("¿Cómo va tu primera semana?", `
+        <tr>
+          <td style="padding:32px 32px 8px 32px;">
+            <h1 style="margin:0; color:#1428D6; font-size:22px;">Hola {{nombre}}, ¿cómo va tu primera semana? 👋</h1>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px 32px 0 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
+            <p>Ya cumpliste tu primera semana en Fortalecernos y queremos saber cómo ha sido tu experiencia hasta ahora.</p>
+            <p>Tu opinión nos ayuda a mejorar el proceso de bienvenida para ti y para los próximos compañeros que se unan al equipo. Toma menos de 3 minutos.</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 32px 0 32px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f5fb; border-left:4px solid #1428D6; border-radius:4px;">
+              <tr>
+                <td style="padding:16px 20px; color:#1a1a1a; font-size:14px; line-height:1.6;">
+                  🔒 Tus respuestas son confidenciales y no afectan tu evaluación. Queremos tu opinión honesta.
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:32px 32px 8px 32px; text-align:center;">
+            <a href="{{link_formulario}}" target="_blank" style="background-color:#1428D6; color:#ffffff; text-decoration:none; font-weight:bold; padding:14px 32px; border-radius:6px; display:inline-block; font-size:15px;">
+              Dar mi feedback →
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:28px 32px 8px 32px; color:#3a3a3a; font-size:14px; line-height:1.6;">
+            <p>Si tienes algún problema urgente (acceso, pago, uniforme, etc.), no esperes al formulario — escríbenos directo:</p>
+            <p style="margin:0;"><strong>{{nombre_rrhh}}</strong> — Recursos Humanos<br>
+            📱 WhatsApp: {{numero_whatsapp}}</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:24px 32px 32px 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
+            <p>Gracias por tu tiempo, y sigue así. 💙</p>
+            <p style="margin:0;"><strong>Equipo Fortalecernos</strong></p>
+          </td>
+        </tr>`)
+  },
+
+  // ------------------------------------------------------------
+  // 3. ANIVERSARIO — 6 MESES
+  // ------------------------------------------------------------
+  {
+    id: "seis_meses",
+    name: "Aniversario · 6 meses",
+    description: "Reconocimiento al cumplir medio año en la empresa.",
+    subject: (d) => `¡{{nombre}}, ya llevas 6 meses con nosotros! 🎉`,
+    fields: [
+      { key: "logro_destacado", label: "Logro o dato destacado (opcional)", type: "text", placeholder: "Ej. Top 3 en ventas de tu zona" },
+    ],
+    html: wrap("6 meses en Fortalecernos", `
+        <tr>
+          <td style="padding:32px 32px 8px 32px;">
+            <h1 style="margin:0; color:#1428D6; font-size:22px;">¡{{nombre}}, cumples 6 meses en Fortalecernos! 🎉</h1>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px 32px 0 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
+            <p>Medio año atrás {{g:llegaste|llegaste}} a nuestro equipo como {{g:Asesor de Ventas|Asesora de Ventas}}, y hoy queremos reconocer tu compromiso y el trabajo que has puesto cada día en tienda.</p>
+            <p>{{g:Gracias por seguir creciendo con nosotros|Gracias por seguir creciendo con nosotros}}. Cada cliente bien atendido y cada meta cumplida suma al crecimiento de Fortalecernos.</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 32px 0 32px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f5fb; border-left:4px solid #1428D6; border-radius:4px;">
+              <tr>
+                <td style="padding:16px 20px; color:#1a1a1a; font-size:14px; line-height:1.6;">
+                  🏆 <strong>{{logro_destacado}}</strong>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:24px 32px 0 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
+            <p>Seguimos construyendo juntos tu camino dentro de la empresa: Asesor → Asesor Senior → Supervisor de zona. Tu supervisor conversará contigo esta semana sobre tus próximos pasos.</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:24px 32px 32px 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
+            <p>¡Gracias por ser parte de Fortalecernos! 💙</p>
+            <p style="margin:0;"><strong>Equipo Fortalecernos</strong></p>
+          </td>
+        </tr>`)
+  },
+
+  // ------------------------------------------------------------
+  // 4. ANIVERSARIO — 1 AÑO
+  // ------------------------------------------------------------
+  {
+    id: "un_anio",
+    name: "Aniversario · 1 año",
+    description: "Reconocimiento al cumplir un año en la empresa.",
+    subject: (d) => `¡{{nombre}}, 1 año construyendo Fortalecernos juntos! 🥳`,
+    fields: [
+      { key: "logro_destacado", label: "Logro o dato destacado (opcional)", type: "text", placeholder: "Ej. Más de 500 clientes atendidos" },
+      { key: "beneficio_aniversario", label: "Beneficio o detalle de aniversario (opcional)", type: "text", placeholder: "Ej. Día libre adicional este mes" },
+    ],
+    html: wrap("1 año en Fortalecernos", `
+        <tr>
+          <td style="padding:32px 32px 8px 32px;">
+            <h1 style="margin:0; color:#1428D6; font-size:22px;">¡{{nombre}}, cumples 1 año en Fortalecernos! 🥳</h1>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px 32px 0 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
+            <p>Hace un año {{g:te uniste|te uniste}} a nuestro equipo, y hoy es un buen momento para decirte algo simple: <strong>gracias por quedarte y crecer con nosotros.</strong></p>
+            <p>Un año en retail no es poco — significa constancia, buen trato a nuestros clientes, y ser parte activa de que Fortalecernos siga creciendo como empresa.</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 32px 0 32px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f5fb; border-left:4px solid #1428D6; border-radius:4px;">
+              <tr>
+                <td style="padding:16px 20px; color:#1a1a1a; font-size:14px; line-height:1.6;">
+                  🏆 <strong>{{logro_destacado}}</strong>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 32px 0 32px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#fff8e6; border-left:4px solid #c9a227; border-radius:4px;">
+              <tr>
+                <td style="padding:16px 20px; color:#5a4a10; font-size:14px; line-height:1.6;">
+                  🎁 <strong>{{beneficio_aniversario}}</strong>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:24px 32px 32px 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
+            <p>¡Vamos por muchos años más juntos! 💙</p>
+            <p style="margin:0;"><strong>Equipo Fortalecernos</strong></p>
+          </td>
+        </tr>`)
+  },
+
+  // ------------------------------------------------------------
+  // 5. CUMPLEAÑOS
+  // ------------------------------------------------------------
+  {
+    id: "cumpleanos",
+    name: "Cumpleaños 🎂",
+    description: "Saludo corto y cálido el día de su cumpleaños.",
+    subject: (d) => `¡Feliz cumpleaños, ${d.nombre}! 🎂`,
+    fields: [],
+    html: wrap("Feliz cumpleaños", `
+        <tr>
+          <td style="padding:32px 32px 8px 32px; text-align:center;">
+            <h1 style="margin:0; color:#1428D6; font-size:24px;">¡Feliz cumpleaños, {{nombre}}! 🎂🎉</h1>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:12px 32px 0 32px; color:#3a3a3a; font-size:15px; line-height:1.6; text-align:center;">
+            <p>Todo el equipo Fortalecernos te desea un día lleno de alegría junto a las personas que quieres.</p>
+            <p>Gracias por ser parte de este equipo y por todo lo que aportas cada día. ¡Que lo disfrutes mucho! 🥳</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 32px 32px 32px; color:#3a3a3a; font-size:15px; line-height:1.6; text-align:center;">
+            <p style="margin:0;"><strong>Con cariño,<br>Equipo Fortalecernos</strong> 💙</p>
+          </td>
+        </tr>`)
+  },
+];

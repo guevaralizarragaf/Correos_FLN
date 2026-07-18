@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Correos de Onboarding · Fortalecernos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-fallback">FORTALECERNOS</div>
+    </div>
+
+    <div>
+      <h2>Plantillas</h2>
+      <div class="template-list" id="template-list"></div>
+    </div>
+
+    <p class="sidebar-footer">Generador interno de correos de onboarding. Los datos de empresa se guardan en este navegador.</p>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <h1 id="template-title">Generador de correos</h1>
+        <p>Completa los datos de la persona y revisa la vista previa. Cuando esté listo, copia el HTML o descárgalo para enviarlo.</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- FORM -->
+      <section class="panel">
+        <h3>Datos del correo</h3>
+        <div id="form-container"></div>
+      </section>
+
+      <!-- PREVIEW -->
+      <section class="panel preview-wrap">
+        <h3>Vista previa</h3>
+        <div class="subject-line"><span>Asunto:</span><span id="subject-preview"></span></div>
+        <div class="preview-frame-holder">
+          <iframe id="preview" title="Vista previa del correo"></iframe>
+        </div>
+        <div class="actions">
+          <button class="btn btn-primary" id="btn-copy">Copiar HTML</button>
+          <button class="btn btn-secondary" id="btn-download">Descargar .html</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="templates.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
