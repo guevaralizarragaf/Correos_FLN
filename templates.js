@@ -8,7 +8,7 @@
 const HEADER = `
 <tr>
   <td style="background-color:#1428D6; padding:28px 32px; text-align:center;">
-    <img src="{{logo_url}}" alt="Fortalecernos" width="200" style="display:block; margin:0 auto;">
+    <img src="{{logo_url}}" alt="Fortalecernos" width="300" style="display:block; margin:0 auto;">
   </td>
 </tr>`;
 
@@ -99,9 +99,9 @@ const TEMPLATES = [
                   <strong>📧 Antes de tu primer día, crea tu correo de trabajo</strong><br>
                   Mientras seguimos creciendo, cada colaborador crea su propio correo en Gmail con esta estructura:
                   <br><br>
-                  <code style="background-color:#ffffff; padding:6px 10px; border-radius:4px; display:inline-block; font-size:14px; color:#1428D6; border:1px solid #e0d6a8;">FLN.[inicialnombre][apellido]@gmail.com</code>
+                  <code style="background-color:#ffffff; padding:6px 10px; border-radius:4px; display:inline-block; font-size:14px; color:#1428D6; border:1px solid #e0d6a8;">fln.[inicialnombre][apellido]@gmail.com</code>
                   <br><br>
-                  Ejemplo: Francisco López → <strong>FLN.flopez@gmail.com</strong><br>
+                  Ejemplo: Francisco López → <strong>fln.flopez@gmail.com</strong><br>
                   Respóndenos con la dirección que creaste para agregarte a los grupos de trabajo.
                 </td>
               </tr>
@@ -197,7 +197,7 @@ const TEMPLATES = [
     description: "Reconocimiento al cumplir medio año en la empresa.",
     subject: (d) => `¡{{nombre}}, ya llevas 6 meses con nosotros! 🎉`,
     fields: [
-      { key: "logro_destacado", label: "Logro o dato destacado (opcional)", type: "text", placeholder: "Ej. Top 3 en ventas de tu zona" },
+      { key: "logro_destacado", label: "Logro o dato destacado", type: "toggle-text", placeholder: "Ej. Top 3 en ventas de tu zona" },
     ],
     html: wrap("6 meses en Fortalecernos", `
         <tr>
@@ -211,6 +211,7 @@ const TEMPLATES = [
             <p>{{g:Gracias por seguir creciendo con nosotros|Gracias por seguir creciendo con nosotros}}. Cada cliente bien atendido y cada meta cumplida suma al crecimiento de Fortalecernos.</p>
           </td>
         </tr>
+        {{#logro_destacado}}
         <tr>
           <td style="padding:20px 32px 0 32px;">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f5fb; border-left:4px solid #1428D6; border-radius:4px;">
@@ -222,6 +223,7 @@ const TEMPLATES = [
             </table>
           </td>
         </tr>
+        {{/logro_destacado}}
         <tr>
           <td style="padding:24px 32px 0 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
             <p>Seguimos construyendo juntos tu camino dentro de la empresa: Asesor → Asesor Senior → Supervisor de zona. Tu supervisor conversará contigo esta semana sobre tus próximos pasos.</p>
@@ -244,8 +246,8 @@ const TEMPLATES = [
     description: "Reconocimiento al cumplir un año en la empresa.",
     subject: (d) => `¡{{nombre}}, 1 año construyendo Fortalecernos juntos! 🥳`,
     fields: [
-      { key: "logro_destacado", label: "Logro o dato destacado (opcional)", type: "text", placeholder: "Ej. Más de 500 clientes atendidos" },
-      { key: "beneficio_aniversario", label: "Beneficio o detalle de aniversario (opcional)", type: "text", placeholder: "Ej. Día libre adicional este mes" },
+      { key: "logro_destacado", label: "Logro o dato destacado", type: "toggle-text", placeholder: "Ej. Más de 500 clientes atendidos" },
+      { key: "beneficio_aniversario", label: "Beneficio o detalle de aniversario", type: "toggle-text", placeholder: "Ej. Día libre adicional este mes" },
     ],
     html: wrap("1 año en Fortalecernos", `
         <tr>
@@ -256,9 +258,10 @@ const TEMPLATES = [
         <tr>
           <td style="padding:8px 32px 0 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
             <p>Hace un año {{g:te uniste|te uniste}} a nuestro equipo, y hoy es un buen momento para decirte algo simple: <strong>gracias por quedarte y crecer con nosotros.</strong></p>
-            <p>Un año en retail no es poco — significa constancia, buen trato a nuestros clientes, y ser parte activa de que Fortalecernos siga creciendo como empresa.</p>
+            <p>Un año en tienda no es poco — significa constancia, buen trato a nuestros clientes, y sobre todo, una confianza que se construye día a día entre tú y Fortalecernos. Nos alegra saber que aquí no solo tienes un trabajo, sino un lugar donde puedes seguir creciendo.</p>
           </td>
         </tr>
+        {{#logro_destacado}}
         <tr>
           <td style="padding:20px 32px 0 32px;">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f5fb; border-left:4px solid #1428D6; border-radius:4px;">
@@ -270,6 +273,8 @@ const TEMPLATES = [
             </table>
           </td>
         </tr>
+        {{/logro_destacado}}
+        {{#beneficio_aniversario}}
         <tr>
           <td style="padding:20px 32px 0 32px;">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#fff8e6; border-left:4px solid #c9a227; border-radius:4px;">
@@ -281,6 +286,7 @@ const TEMPLATES = [
             </table>
           </td>
         </tr>
+        {{/beneficio_aniversario}}
         <tr>
           <td style="padding:24px 32px 32px 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
             <p>¡Vamos por muchos años más juntos! 💙</p>
@@ -295,9 +301,37 @@ const TEMPLATES = [
   {
     id: "cumpleanos",
     name: "Cumpleaños 🎂",
-    description: "Saludo corto y cálido el día de su cumpleaños.",
+    description: "Saludo cálido el día de su cumpleaños, con 5 mensajes para elegir.",
     subject: (d) => `¡Feliz cumpleaños, ${d.nombre}! 🎂`,
-    fields: [],
+    fields: [
+      {
+        key: "mensaje_cumple_id",
+        label: "Mensaje de cumpleaños",
+        type: "select",
+        options: [
+          { value: "1", label: "Mensaje 1 · Cálido y sencillo" },
+          { value: "2", label: "Mensaje 2 · De parte del equipo" },
+          { value: "3", label: "Mensaje 3 · Deseo de bendiciones" },
+          { value: "4", label: "Mensaje 4 · Buena energía" },
+          { value: "5", label: "Mensaje 5 · Breve y directo" },
+        ],
+      },
+    ],
+    // Los 5 mensajes son genéricos: ninguno menciona un cargo o puesto,
+    // así se pueden enviar a cualquier colaborador de la empresa.
+    mensajesCumple: {
+      "1": (nombre) => `Hoy es tu día, ${nombre}. Que lo disfrutes rodeado de las personas que más quieres y con muchas ganas de celebrar. ¡Feliz cumpleaños!`,
+      "2": (nombre) => `En Fortalecernos nos alegra mucho poder celebrarte, ${nombre}. Gracias por ser parte de este equipo y por todo lo que compartes con nosotros. ¡Que tengas un cumpleaños increíble!`,
+      "3": (nombre) => `${nombre}, esperamos que este nuevo año de vida venga cargado de cosas buenas, salud y muchas sonrisas. ¡Feliz cumpleaños de parte de todo el equipo Fortalecernos!`,
+      "4": (nombre) => `Cada año que cumples es un motivo más para celebrar contigo, ${nombre}. Gracias por tu buena energía y por ser parte de nuestra familia Fortalecernos. ¡Feliz cumpleaños!`,
+      "5": (nombre) => `Hoy queremos tomarnos un momento para desearte un muy feliz cumpleaños, ${nombre}. Que este día esté lleno de alegría y que el próximo año te traiga muchas bendiciones.`,
+    },
+    beforeRender: function (data) {
+      const map = this.mensajesCumple;
+      const id = data.mensaje_cumple_id && map[data.mensaje_cumple_id] ? data.mensaje_cumple_id : "1";
+      data.mensaje_cumple = map[id](data.nombre || "");
+      return data;
+    },
     html: wrap("Feliz cumpleaños", `
         <tr>
           <td style="padding:32px 32px 8px 32px; text-align:center;">
@@ -306,8 +340,7 @@ const TEMPLATES = [
         </tr>
         <tr>
           <td style="padding:12px 32px 0 32px; color:#3a3a3a; font-size:15px; line-height:1.6; text-align:center;">
-            <p>Todo el equipo Fortalecernos te desea un día lleno de alegría junto a las personas que quieres.</p>
-            <p>Gracias por ser parte de este equipo y por todo lo que aportas cada día. ¡Que lo disfrutes mucho! 🥳</p>
+            <p>{{mensaje_cumple}}</p>
           </td>
         </tr>
         <tr>

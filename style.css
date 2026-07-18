@@ -219,6 +219,39 @@ body{
   background:#fff;
 }
 
+.toggle-field .toggle-label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:8px;
+  cursor:pointer;
+  color:var(--text);
+}
+
+.toggle-field input[type="checkbox"]{
+  width:16px;
+  height:16px;
+  accent-color:var(--blue);
+  cursor:pointer;
+}
+
+.toggle-field input[type="text"]:disabled{
+  background:#eceef5;
+  color:var(--text-soft);
+  cursor:not-allowed;
+}
+
+.grid-single{
+  grid-template-columns:1fr;
+  max-width:560px;
+}
+
+.settings-btn{
+  width:100%;
+}
+
 .divider{
   border:none;
   border-top:1px solid var(--border);
