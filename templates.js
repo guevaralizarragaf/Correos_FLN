@@ -316,9 +316,21 @@ const TEMPLATES = [
           { value: "5", label: "Mensaje 5 · Breve y directo" },
         ],
       },
+      {
+        key: "cierre_cumple_id",
+        label: "Firma / cierre de RRHH",
+        type: "select",
+        options: [
+          { value: "1", label: "Cierre 1 · Con cariño" },
+          { value: "2", label: "Cierre 2 · Con mucho aprecio" },
+          { value: "3", label: "Cierre 3 · Un abrazo grande" },
+          { value: "4", label: "Cierre 4 · De parte de todo el equipo" },
+          { value: "5", label: "Cierre 5 · Feliz día" },
+        ],
+      },
     ],
-    // Los 5 mensajes son genéricos: ninguno menciona un cargo o puesto,
-    // así se pueden enviar a cualquier colaborador de la empresa.
+    // Los 5 mensajes y los 5 cierres son genéricos: ninguno menciona un
+    // cargo o puesto, así se pueden enviar a cualquier colaborador de la empresa.
     mensajesCumple: {
       "1": (nombre) => `Hoy es tu día, ${nombre}. Que lo disfrutes rodeado de las personas que más quieres y con muchas ganas de celebrar. ¡Feliz cumpleaños!`,
       "2": (nombre) => `En Fortalecernos nos alegra mucho poder celebrarte, ${nombre}. Gracias por ser parte de este equipo y por todo lo que compartes con nosotros. ¡Que tengas un cumpleaños increíble!`,
@@ -326,10 +338,20 @@ const TEMPLATES = [
       "4": (nombre) => `Cada año que cumples es un motivo más para celebrar contigo, ${nombre}. Gracias por tu buena energía y por ser parte de nuestra familia Fortalecernos. ¡Feliz cumpleaños!`,
       "5": (nombre) => `Hoy queremos tomarnos un momento para desearte un muy feliz cumpleaños, ${nombre}. Que este día esté lleno de alegría y que el próximo año te traiga muchas bendiciones.`,
     },
+    cierresCumple: {
+      "1": `Con cariño,<br>Equipo Fortalecernos 💙`,
+      "2": `Con mucho aprecio,<br>Equipo Fortalecernos 🎉`,
+      "3": `Un abrazo grande,<br>Equipo Fortalecernos 🤗`,
+      "4": `De parte de todo el equipo,<br>Fortalecernos 💙`,
+      "5": `¡Feliz día!<br>Equipo Fortalecernos 🎈`,
+    },
     beforeRender: function (data) {
-      const map = this.mensajesCumple;
-      const id = data.mensaje_cumple_id && map[data.mensaje_cumple_id] ? data.mensaje_cumple_id : "1";
-      data.mensaje_cumple = map[id](data.nombre || "");
+      const mensajes = this.mensajesCumple;
+      const cierres = this.cierresCumple;
+      const idMsg = data.mensaje_cumple_id && mensajes[data.mensaje_cumple_id] ? data.mensaje_cumple_id : "1";
+      const idCierre = data.cierre_cumple_id && cierres[data.cierre_cumple_id] ? data.cierre_cumple_id : "1";
+      data.mensaje_cumple = mensajes[idMsg](data.nombre || "");
+      data.cierre_cumple = cierres[idCierre];
       return data;
     },
     html: wrap("Feliz cumpleaños", `
@@ -345,7 +367,7 @@ const TEMPLATES = [
         </tr>
         <tr>
           <td style="padding:20px 32px 32px 32px; color:#3a3a3a; font-size:15px; line-height:1.6; text-align:center;">
-            <p style="margin:0;"><strong>Con cariño,<br>Equipo Fortalecernos</strong> 💙</p>
+            <p style="margin:0;"><strong>{{cierre_cumple}}</strong></p>
           </td>
         </tr>`)
   },
