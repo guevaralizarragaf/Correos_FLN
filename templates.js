@@ -189,7 +189,55 @@ const TEMPLATES = [
   },
 
   // ------------------------------------------------------------
-  // 3. ANIVERSARIO — 6 MESES
+  // 3. PRIMER MES — 30 DÍAS
+  // ------------------------------------------------------------
+  {
+    id: "treinta_dias",
+    name: "Primer mes · 30 días",
+    description: "Felicita por culminar el primer mes; el supervisor coordinará una reunión de seguimiento.",
+    subject: (d) => `¡{{nombre}}, completaste tu primer mes en Fortalecernos! 🙌`,
+    fields: [
+      { key: "reconocimiento", label: "Reconocimiento especial", type: "toggle-text", placeholder: "Ej. Destacaste por tu buena atención al cliente" },
+    ],
+    html: wrap("Primer mes en Fortalecernos", `
+        <tr>
+          <td style="padding:32px 32px 8px 32px;">
+            <h1 style="margin:0; color:#1428D6; font-size:22px;">¡{{nombre}}, completaste tu primer mes en Fortalecernos! 🙌</h1>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px 32px 0 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
+            <p>Ya pasaron 30 días desde que {{g:te uniste|te uniste}} al equipo, y queremos felicitarte por este primer mes. Sabemos que adaptarte a un nuevo trabajo toma esfuerzo, y valoramos mucho tu compromiso desde el día uno.</p>
+          </td>
+        </tr>
+        {{#reconocimiento}}
+        <tr>
+          <td style="padding:20px 32px 0 32px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f5fb; border-left:4px solid #1428D6; border-radius:4px;">
+              <tr>
+                <td style="padding:16px 20px; color:#1a1a1a; font-size:14px; line-height:1.6;">
+                  🌟 <strong>{{reconocimiento}}</strong>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        {{/reconocimiento}}
+        <tr>
+          <td style="padding:24px 32px 0 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
+            <p>Tu supervisor se reunirá contigo, previa coordinación, para conversar sobre cómo ha ido este primer mes: qué has mejorado y en qué aún hay oportunidad de seguir creciendo.</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:24px 32px 32px 32px; color:#3a3a3a; font-size:15px; line-height:1.6;">
+            <p>¡Sigue así! Gracias por ser parte de Fortalecernos. 💙</p>
+            <p style="margin:0;"><strong>Equipo Fortalecernos</strong></p>
+          </td>
+        </tr>`)
+  },
+
+  // ------------------------------------------------------------
+  // 4. ANIVERSARIO — 6 MESES
   // ------------------------------------------------------------
   {
     id: "seis_meses",
@@ -238,7 +286,7 @@ const TEMPLATES = [
   },
 
   // ------------------------------------------------------------
-  // 4. ANIVERSARIO — 1 AÑO
+  // 5. ANIVERSARIO — 1 AÑO
   // ------------------------------------------------------------
   {
     id: "un_anio",
@@ -296,7 +344,7 @@ const TEMPLATES = [
   },
 
   // ------------------------------------------------------------
-  // 5. CUMPLEAÑOS
+  // 6. CUMPLEAÑOS
   // ------------------------------------------------------------
   {
     id: "cumpleanos",
